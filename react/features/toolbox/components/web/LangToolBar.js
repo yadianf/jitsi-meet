@@ -1,10 +1,11 @@
 import React, {memo, useState} from 'react'
 import {En, Es, Fr, Room} from "../../../base/icons/svg";
 import ToolbarButton from "./ToolbarButton";
-import { useTranlation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
+
 
 const LangToolBar = () => {
-    const {t} = useTranlation('languages')
+    const {t} = useTranslation('languages')
 
     return (
         <div>
