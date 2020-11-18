@@ -1,5 +1,5 @@
 import React, {memo, useState} from 'react'
-import {En, Es, Fr} from "../../../base/icons/svg";
+import {En, Es, Fr, Room} from "../../../base/icons/svg";
 import ToolbarButton from "./ToolbarButton";
 import { useTranlation } from 'react-i18next';
 
@@ -26,9 +26,15 @@ const LangToolBar = () => {
             icon = { Fr }
             onClick = { this._onToolbarOpenInvite }
             tooltip = { t('fr') } />
+            <ToolbarButton
+            accessibilityLabel =
+                { 'Abierto' }
+            icon = { Room }
+            onClick = { this._onToolbarOpenInvite }
+            tooltip = { 'Abierto' } />
         </>
     );
 
 }
 
-export default memo(LangToolBar);
+export default LangToolBar;
