@@ -26,7 +26,7 @@ import {
 
 import Labels from './Labels';
 import {default as Notice} from './Notice';
-import {LanguageProvider} from "../../../base/contexts/LanguageContext";
+import {LanguageProvider} from "../../../contexts/LanguageContext";
 
 declare var APP: Object;
 declare var interfaceConfig: Object;

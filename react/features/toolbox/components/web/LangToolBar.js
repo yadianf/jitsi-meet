@@ -2,7 +2,7 @@ import React from 'react'
 import {En, Es, Fr, Room} from "../../../base/icons/svg";
 import ToolbarButton from "./ToolbarButton";
 import {useTranslation} from 'react-i18next';
-import {LANG_TYPE, useLanguage} from "../../../base/contexts/LanguageContext";
+import {LANG_TYPE, useLanguage} from "../../../contexts/LanguageContext";
 
 
 const LangToolBar = () => {
