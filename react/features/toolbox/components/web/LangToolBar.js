@@ -7,32 +7,28 @@ const LangToolBar = () => {
     const {t} = useTranlation('languages')
 
     return (
-        <>
+        <div>
             <ToolbarButton
             accessibilityLabel =
                 { t('es') }
             icon = { Es }
-            onClick = { this._onToolbarOpenInvite }
             tooltip = { t('es') } />
             <ToolbarButton
             accessibilityLabel =
                 { t('en') }
             icon = { En }
-            onClick = { this._onToolbarOpenInvite }
             tooltip = { t('en') } />
             <ToolbarButton
             accessibilityLabel =
                 { t('fr') }
             icon = { Fr }
-            onClick = { this._onToolbarOpenInvite }
             tooltip = { t('fr') } />
             <ToolbarButton
             accessibilityLabel =
                 { 'Abierto' }
             icon = { Room }
-            onClick = { this._onToolbarOpenInvite }
             tooltip = { 'Abierto' } />
-        </>
+        </div>
     );
 
 }
