@@ -86,6 +86,7 @@ import OverflowMenuButton from './OverflowMenuButton';
 import OverflowMenuProfileItem from './OverflowMenuProfileItem';
 import ToolbarButton from './ToolbarButton';
 import VideoSettingsButton from './VideoSettingsButton';
+import LangToolBar from './LangToolBar';
 
 /**
  * The type of the React {@code Component} props of {@link Toolbox}.
@@ -1352,8 +1353,11 @@ class Toolbox extends Component<Props, State> {
                                 this._onToolbarOpenLocalRecordingInfoDialog
                             } />
                     }
-                    { buttonsRight.indexOf('tileview') !== -1
-                        && <TileViewButton /> }
+                    <LangToolBar/>
+                    {
+                        buttonsRight.indexOf('tileview') !== -1
+                        && <TileViewButton />
+                    }
                     { buttonsRight.indexOf('invite') !== -1
                         && <ToolbarButton
                             accessibilityLabel =
