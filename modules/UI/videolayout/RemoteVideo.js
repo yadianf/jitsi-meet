@@ -29,6 +29,7 @@ import { LAYOUTS, getCurrentLayout } from '../../../react/features/video-layout'
 import UIUtils from '../util/UIUtil';
 
 import SmallVideo from './SmallVideo';
+import {useLanguage} from "../../../react/features/contexts/LanguageContext";
 
 const logger = Logger.getLogger(__filename);
 
@@ -65,7 +66,7 @@ function createContainer(spanId) {
 /**
  *
  */
-export default class RemoteVideo extends SmallVideo {
+ class RemoteVideo extends SmallVideo {
     /**
      * Creates new instance of the <tt>RemoteVideo</tt>.
      * @param user {JitsiParticipant} the user for whom remote video instance will
@@ -79,6 +80,14 @@ export default class RemoteVideo extends SmallVideo {
         this.user = user;
         this.id = user.getId();
         this.videoSpanId = `participant_${this.id}`;
+        console.log('--------------------------');
+        console.log('--------------------------');
+        console.log('--------------------------');
+        console.log('--------------------------');
+        console.log(user);
+        console.log('--------------------------');
+        console.log('--------------------------');
+        console.log('--------------------------');
 
         this._audioStreamElement = null;
         this._supportsRemoteControl = false;
@@ -496,3 +505,9 @@ export default class RemoteVideo extends SmallVideo {
         }
     }
 }
+
+const RemoteVideoWrapper = (props)=>{
+     const {langType} =useLanguage();
+     return <RemoteVideo langType={langType} {...props}/>
+}
+export default RemoteVideoWrapper;
