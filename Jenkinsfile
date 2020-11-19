@@ -4,10 +4,14 @@ pipeline
    stages {
        stage('Deploy') {
            agent { node {label 'Jitsi' }}
+           tools {
+			    nodejs 'node_v12.18.3'
+			}
            steps {
                 sh '''
                 echo Deploying ....
                 rm Jenkinsfile README.md
+                npm install
                 sudo docker build -t jitsi-web-dofleini .
                 sudo docker rm jitsi-web-dofleini -f
                 sudo docker run -d --rm -p 127.0.0.1:8080:8080 --name jitsi-web-dofleini jitsi-web-dofleini:latest
