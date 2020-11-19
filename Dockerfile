@@ -1,6 +1,6 @@
 FROM node:12.19.1-stretch
 
-COPY ./* jitsi-web
+COPY ./* jitsi-web/
 
 WORKDIR jitsi-web
 
