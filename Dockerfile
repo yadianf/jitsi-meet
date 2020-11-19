@@ -1,8 +1,6 @@
 FROM node:12.19.1-stretch
 
-ADD ./jitsi-meet/ jitsi-meet
-
-RUN ls -lh jitsi-meet
+ADD ./* jitsi-meet
 
 WORKDIR /jitsi-meet
 
