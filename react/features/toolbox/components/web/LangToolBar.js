@@ -6,14 +6,22 @@ import {
     LANG_TYPE,
     useLanguage
 } from "../../../translator-moderator/LanguageContext";
+import {sendMessage, setPrivateMessageRecipient} from "../../../chat";
+import {connect} from "../../../base/redux";
+import {
+    changeLang,
+    getLocalParticipant,
+    getParticipantById, PARTICIPANT_ROLE
+} from "../../../base/participants";
 
 
-const LangToolBar = () => {
+const LangToolBar = ({lang}) => {
     const {t} = useTranslation('languages');
     const {langType, useEN, useES, useFR, useOPEN} = useLanguage()
 
     return (
         <div>
+            <pre>{JSON.stringify(lang, null, 2)}</pre>
             <ToolbarButton
                 accessibilityLabel=
                     {t('es')}
@@ -47,4 +55,21 @@ const LangToolBar = () => {
 
 }
 
-export default LangToolBar;
+export function _mapDispatchToProps(dispatch: Function): $Shape<Props> {
+    return {
+        onChangeLang: (lang) => {
+            dispatch(changeLang(lang));
+        },
+    };
+}
+
+function _mapStateToProps(state){
+    // Only the local participant won't have id for the time when the conference is not yet joined.
+    const {lang} = state;
+
+    return {
+      lang
+    };
+}
+
+export default connect(_mapStateToProps, _mapDispatchToProps)(LangToolBar);

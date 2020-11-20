@@ -136,6 +136,8 @@ export const PARTICIPANT_UPDATED = 'PARTICIPANT_UPDATED';
  */
 export const PIN_PARTICIPANT = 'PIN_PARTICIPANT';
 
+export const CHANGE_LAN = 'CHANGE_LAN';
+
 /**
  * Action to signal that a hidden participant has joined.
  *

@@ -14,6 +14,7 @@ import {
     PARTICIPANT_LEFT,
     PARTICIPANT_UPDATED,
     PIN_PARTICIPANT,
+    CHANGE_LAN,
     SET_LOADABLE_AVATAR_URL
 } from './actionTypes';
 import {
@@ -469,6 +470,15 @@ export function pinParticipant(id) {
         type: PIN_PARTICIPANT,
         participant: {
             id
+        }
+    };
+}
+
+export function changeLang(lang) {
+    return {
+        type: CHANGE_LAN,
+        lang: {
+            lang
         }
     };
 }

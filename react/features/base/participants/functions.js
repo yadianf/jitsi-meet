@@ -116,6 +116,24 @@ export function getParticipantById(
 }
 
 /**
+ * Returns participant by ID from Redux state.
+ *
+ * @param {(Function|Object|Participant[])} stateful - The redux state
+ * features/base/participants, the (whole) redux state, or redux's
+ * {@code getState} function to be used to retrieve the state
+ * features/base/participants.
+ * @param {string} id - The ID of the participant to retrieve.
+ * @private
+ * @returns {(Participant|undefined)}
+ */
+export function getCurrentLan(
+    stateful: Object ): ?String {
+
+    // return participants.find(p => p.id === id);
+}
+
+
+/**
  * Returns a count of the known participants in the passed in redux state,
  * excluding any fake participants.
  *
