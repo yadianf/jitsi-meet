@@ -167,7 +167,7 @@ export default class RemoteVideo extends SmallVideo {
         ReactDOM.render(
             <Provider store = { APP.store }>
                 <LanguageModeratorControl participantID = { this.id }
-                                          onVolumeChange={this._setAudioVolume}/>
+                                          onVolumeChange={(val)=>this._setAudioVolume(val)}/>
             </Provider>,
             langContainer);
     }
