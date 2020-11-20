@@ -1221,6 +1221,7 @@ class Toolbox extends Component<Props, State> {
             _chatOpen,
             _overflowMenuVisible,
             _raisedHand,
+            _isModerator,
             t
         } = this.props;
         const overflowMenuContent = this._renderOverflowMenuContent();
@@ -1368,7 +1369,7 @@ class Toolbox extends Component<Props, State> {
                     {/*        icon = { IconInviteMore }*/}
                     {/*        onClick = { this._onToolbarOpenInvite }*/}
                     {/*        tooltip = { t('toolbar.invite') } /> }*/}
-                    { buttonsRight.indexOf('security') !== -1
+                    { _isModerator && buttonsRight.indexOf('security') !== -1
                         && <SecurityDialogButton customClass = 'security-toolbar-button' /> }
                     { buttonsRight.indexOf('overflowmenu') !== -1
                         && <OverflowMenuButton

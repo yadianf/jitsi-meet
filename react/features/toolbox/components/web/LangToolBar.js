@@ -23,18 +23,21 @@ const LangToolBar = ({langType, useES, useEN, useFR, useOPEN, isSmallWidth}) => 
 
     const overflowMenuContent = [
         <ToolbarButton
+            key={'es'}
             accessibilityLabel={t('es')}
             icon={ICON.ES}
             onClick={(useES)}
             toggled={langType === LANG_TYPE.ES}
             tooltip={t('es')}/>,
         <ToolbarButton
+            key={'en'}
             accessibilityLabel={t('en')}
             icon={ICON.EN}
             onClick={useEN}
             toggled={langType === LANG_TYPE.EN}
             tooltip={t('en')}/>,
         <ToolbarButton
+            key={'fr'}
             accessibilityLabel=
                 {t('fr')}
             icon={ICON.FR}
@@ -42,6 +45,7 @@ const LangToolBar = ({langType, useES, useEN, useFR, useOPEN, isSmallWidth}) => 
             toggled={langType === LANG_TYPE.FR}
             tooltip={t('fr')}/>,
         <ToolbarButton
+            key={'open'}
             accessibilityLabel=
                 {'Abierto'}
             toggled={langType === LANG_TYPE.OPEN}
