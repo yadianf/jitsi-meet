@@ -14,8 +14,7 @@ const LangToolBar = ({langType, useES, useEN, useFR, useOPEN}) => {
     return (
         <div>
             <ToolbarButton
-                accessibilityLabel=
-                    {t('es')}
+                accessibilityLabel= {t('es')}
                 icon={Es}
                 onClick={(useES)}
                 toggled={langType === LANG_TYPE.ES}

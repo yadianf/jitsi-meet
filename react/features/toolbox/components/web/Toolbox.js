@@ -1012,6 +1012,8 @@ class Toolbox extends Component<Props, State> {
         } = this.props;
 
         return [
+            (this._shouldShowButton('security') || this._shouldShowButton('info'))
+                && <SecurityDialogButton customClass = 'security-toolbar-button' />,
             this._isProfileVisible()
                 && <OverflowMenuProfileItem
                     key = 'profile'
@@ -1357,15 +1359,15 @@ class Toolbox extends Component<Props, State> {
                     <LangToolBar/>
                     { buttonsRight.indexOf('tileview') !== -1
                         && <TileViewButton /> }
-                    { buttonsRight.indexOf('invite') !== -1
-                        && <ToolbarButton
-                            accessibilityLabel =
-                                { t('toolbar.accessibilityLabel.invite') }
-                            icon = { IconInviteMore }
-                            onClick = { this._onToolbarOpenInvite }
-                            tooltip = { t('toolbar.invite') } /> }
-                    { buttonsRight.indexOf('security') !== -1
-                        && <SecurityDialogButton customClass = 'security-toolbar-button' /> }
+                    {/*{ buttonsRight.indexOf('invite') !== -1*/}
+                    {/*    && <ToolbarButton*/}
+                    {/*        accessibilityLabel =*/}
+                    {/*            { t('toolbar.accessibilityLabel.invite') }*/}
+                    {/*        icon = { IconInviteMore }*/}
+                    {/*        onClick = { this._onToolbarOpenInvite }*/}
+                    {/*        tooltip = { t('toolbar.invite') } /> }*/}
+                    {/*{ buttonsRight.indexOf('security') !== -1*/}
+                    {/*    && <SecurityDialogButton customClass = 'security-toolbar-button' /> }*/}
                     { buttonsRight.indexOf('overflowmenu') !== -1
                         && <OverflowMenuButton
                             isOpen = { _overflowMenuVisible }
