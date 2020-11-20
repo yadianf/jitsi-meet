@@ -1,24 +1,7 @@
 // import React, {useEffect} from 'react'
 // import {useLanguage} from "../../../react/features/contexts/LanguageContext";
 //
-// const LanguageVolumeControl = ({IamTranslator, language, onVolumeChange}) => {
-//     const {langType} = useLanguage();
-//     useEffect(() => {
-//         alert('part' + langType)
-//         if (IamTranslator) {
-//             const value = (language === langType) ? 1 : 0;
-//             alert('part' + value)
-//             // onVolumeChange((language === langType) ? 100 : 0)
-//         }
-//     }, [langType, IamTranslator, language])
-//
-//     return (
-//         <div>
-//             control
-//         </div>
-//     );
-//
-// }
+
 //
 //
 // class LanguageModeratorControl {
@@ -33,12 +16,33 @@
 // export default LanguageModeratorControl;
 /* @flow */
 
-import React, {Component} from 'react';
+import React, {Component, useEffect} from 'react';
 import {
     getLocalParticipant,
-    getParticipantById, PARTICIPANT_ROLE
+    getParticipantById,
+    PARTICIPANT_ROLE
 } from "../../../react/features/base/participants";
 import {connect} from "../../../react/features/base/redux";
+import {
+    LANG_TYPE,
+    useLanguage
+} from "../../../react/features/translator-moderator/LanguageContext";
+
+const LanguageVolumeControl = ({lang, onVolumeChange}) => {
+    const {langType} = useLanguage();
+    useEffect(() => {
+        const value = (lang === langType) ? 1 : 0;
+        alert('lang change ' + langType+ ' value '+ value);
+            // onVolumeChange((language === langType) ? 100 : 0)
+    }, [langType, lang])
+
+    return (
+        <div>
+            control
+        </div>
+    );
+
+}
 
 /**
  * React {@code Component} for showing the status bar in a thumbnail.
@@ -55,12 +59,18 @@ class LanguageModeratorControl extends Component {
     render() {
         const {
             participant,
-            isModerator
+            isModerator,
+            isLang,
+            lang
         } = this.props;
+
         return (
             <div>
                 <p>{participant && participant.name}</p>
-                <p>{isModerator?'moderator':'no moderator'}</p>
+                <p>{isModerator ? 'moderator' : 'no moderator'}</p>
+                {
+                    isLang && <LanguageVolumeControl lang={lang}/>
+                }
             </div>
         );
     }
@@ -82,10 +92,13 @@ function _mapStateToProps(state, ownProps) {
 
     // Only the local participant won't have id for the time when the conference is not yet joined.
     const participant = participantID ? getParticipantById(state, participantID) : getLocalParticipant(state);
-
+    const name = participant && participant.name;
+    const isModerator = participant && participant.role === PARTICIPANT_ROLE.MODERATOR;
     return {
         participant,
-        isModerator: participant && participant.role === PARTICIPANT_ROLE.MODERATOR
+        isModerator,
+        isLang: isModerator && LANG_TYPE[name],
+        lang:LANG_TYPE[name]
     };
 }
 
