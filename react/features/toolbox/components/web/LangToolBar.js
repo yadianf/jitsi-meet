@@ -52,6 +52,7 @@ const LangToolBar = ({langType, useES, useEN, useFR, useOPEN, isSmallWidth}) => 
     if (isSmallWidth)
         return (<OverflowMenuButton
             icon={ICON[langType]}
+            hideAccessibility
             isOpen={_overflowMenuVisible}
             onVisibilityChange={_onSetOverflowVisible}>
             <ul

@@ -27,7 +27,7 @@ import {
 } from '../../../base/icons';
 import {
     getLocalParticipant,
-    getParticipants,
+    getParticipants, PARTICIPANT_ROLE,
     participantUpdated
 } from '../../../base/participants';
 import { connect, equals } from '../../../base/redux';
@@ -1008,6 +1008,7 @@ class Toolbox extends Component<Props, State> {
             _fullScreen,
             _screensharing,
             _sharingVideo,
+            _isModerator,
             t
         } = this.props;
 
@@ -1029,13 +1030,13 @@ class Toolbox extends Component<Props, State> {
                     key = 'fullscreen'
                     onClick = { this._onToolbarToggleFullScreen }
                     text = { _fullScreen ? t('toolbar.exitFullScreen') : t('toolbar.enterFullScreen') } />,
-            <LiveStreamButton
+            _isModerator && <LiveStreamButton
                 key = 'livestreaming'
                 showLabel = { true } />,
-            <RecordButton
+            _isModerator && <RecordButton
                 key = 'record'
                 showLabel = { true } />,
-            this._shouldShowButton('sharedvideo')
+            _isModerator && this._shouldShowButton('sharedvideo')
                 && <OverflowMenuItem
                     accessibilityLabel = { t('toolbar.accessibilityLabel.sharedvideo') }
                     icon = { IconShareVideo }
@@ -1457,6 +1458,7 @@ function _mapStateToProps(state) {
         _fullScreen: fullScreen,
         _tileViewEnabled: shouldDisplayTileView(state),
         _localParticipantID: localParticipant.id,
+        _isModerator : localParticipant && localParticipant.role === PARTICIPANT_ROLE.MODERATOR,
         _localRecState: localRecordingStates,
         _locked: locked,
         _overflowMenuVisible: overflowMenuVisible,

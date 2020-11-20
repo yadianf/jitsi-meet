@@ -1,11 +1,11 @@
 /* @flow */
 
 import InlineDialog from '@atlaskit/inline-dialog';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
-import { createToolbarEvent, sendAnalytics } from '../../../analytics';
-import { translate } from '../../../base/i18n';
-import { IconMenuThumb } from '../../../base/icons';
+import {createToolbarEvent, sendAnalytics} from '../../../analytics';
+import {translate} from '../../../base/i18n';
+import {IconMenuThumb} from '../../../base/icons';
 
 import ToolbarButton from './ToolbarButton';
 
@@ -63,22 +63,23 @@ class OverflowMenuButton extends Component<Props> {
      * @returns {ReactElement}
      */
     render() {
-        const { children, isOpen, t } = this.props;
+        const {children, isOpen, t} = this.props;
         const icon = this.props.icon || IconMenuThumb;
+        const accessibilityLabel = this.props.hideAccessibility ? '' : 'toolbar.accessibilityLabel.moreActions';
         return (
-            <div className = 'toolbox-button-wth-dialog'>
+            <div className='toolbox-button-wth-dialog'>
                 <InlineDialog
-                    content = { children }
-                    isOpen = { isOpen }
-                    onClose = { this._onCloseDialog }
-                    position = { 'top right' }>
+                    content={children}
+                    isOpen={isOpen}
+                    onClose={this._onCloseDialog}
+                    position={'top right'}>
                     <ToolbarButton
-                        accessibilityLabel =
-                            { t('toolbar.accessibilityLabel.moreActions') }
-                        icon = { icon }
-                        onClick = { this._onToggleDialogVisibility }
-                        toggled = { isOpen }
-                        tooltip = { t('toolbar.moreActions') } />
+                        accessibilityLabel=
+                            {accessibilityLabel ? t('toolbar.accessibilityLabel.moreActions') : undefined}
+                        icon={icon}
+                        onClick={this._onToggleDialogVisibility}
+                        toggled={isOpen}
+                        tooltip={t('toolbar.moreActions')}/>
                 </InlineDialog>
             </div>
         );
