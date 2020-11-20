@@ -4,28 +4,33 @@ import _ from 'lodash';
 import React from 'react';
 
 import VideoLayout from '../../../../../modules/UI/videolayout/VideoLayout';
-import { getConferenceNameForTitle } from '../../../base/conference';
-import { connect, disconnect } from '../../../base/connection';
-import { translate } from '../../../base/i18n';
-import { connect as reactReduxConnect } from '../../../base/redux';
-import { Chat } from '../../../chat';
-import { Filmstrip } from '../../../filmstrip';
-import { CalleeInfoContainer } from '../../../invite';
-import { LargeVideo } from '../../../large-video';
-import { KnockingParticipantList, LobbyScreen } from '../../../lobby';
-import { Prejoin, isPrejoinPageVisible } from '../../../prejoin';
-import { fullScreenChanged, setToolboxAlwaysVisible, showToolbox } from '../../../toolbox/actions.web';
-import { Toolbox } from '../../../toolbox/components/web';
-import { LAYOUTS, getCurrentLayout } from '../../../video-layout';
-import { maybeShowSuboptimalExperienceNotification } from '../../functions';
+import {getConferenceNameForTitle} from '../../../base/conference';
+import {connect, disconnect} from '../../../base/connection';
+import {translate} from '../../../base/i18n';
+import {connect as reactReduxConnect} from '../../../base/redux';
+import {Chat} from '../../../chat';
+import {Filmstrip} from '../../../filmstrip';
+import {CalleeInfoContainer} from '../../../invite';
+import {LargeVideo} from '../../../large-video';
+import {KnockingParticipantList, LobbyScreen} from '../../../lobby';
+import {isPrejoinPageVisible, Prejoin} from '../../../prejoin';
+import {
+    fullScreenChanged,
+    setToolboxAlwaysVisible,
+    showToolbox
+} from '../../../toolbox/actions.web';
+import {Toolbox} from '../../../toolbox/components/web';
+import {getCurrentLayout, LAYOUTS} from '../../../video-layout';
+import {maybeShowSuboptimalExperienceNotification} from '../../functions';
+import type {AbstractProps} from '../AbstractConference';
 import {
     AbstractConference,
     abstractMapStateToProps
 } from '../AbstractConference';
-import type { AbstractProps } from '../AbstractConference';
 
 import Labels from './Labels';
-import { default as Notice } from './Notice';
+import {default as Notice} from './Notice';
+import {LanguageProvider} from "../../../translator-moderator/LanguageContext";
 
 declare var APP: Object;
 declare var config: Object;
@@ -189,28 +194,31 @@ class Conference extends AbstractConference<Props, *> {
         const hideLabels = filmstripOnly || _iAmRecorder;
 
         return (
-            <div
-                className = { _layoutClassName }
-                id = 'videoconference_page'
-                onMouseMove = { this._onShowToolbar }>
+            <LanguageProvider>
+                <div
+                    className={_layoutClassName}
+                    id='videoconference_page'
+                    onMouseMove={this._onShowToolbar}>
 
-                <Notice />
-                <div id = 'videospace'>
-                    <LargeVideo />
-                    <KnockingParticipantList />
-                    <Filmstrip filmstripOnly = { filmstripOnly } />
-                    { hideLabels || <Labels /> }
+                    <Notice/>
+                    <div id='videospace'>
+                        <LargeVideo/>
+                        <KnockingParticipantList/>
+                        <Filmstrip filmstripOnly={filmstripOnly}/>
+                        {hideLabels || <Labels/>}
+                    </div>
+
+                    {filmstripOnly || _showPrejoin || _isLobbyScreenVisible ||
+                    <Toolbox/>}
+                    {filmstripOnly || <Chat/>}
+
+                    {this.renderNotificationsContainer()}
+
+                    <CalleeInfoContainer/>
+
+                    {!filmstripOnly && _showPrejoin && <Prejoin/>}
                 </div>
-
-                { filmstripOnly || _showPrejoin || _isLobbyScreenVisible || <Toolbox /> }
-                { filmstripOnly || <Chat /> }
-
-                { this.renderNotificationsContainer() }
-
-                <CalleeInfoContainer />
-
-                { !filmstripOnly && _showPrejoin && <Prejoin />}
-            </div>
+            </LanguageProvider>
         );
     }
 
@@ -251,14 +259,14 @@ class Conference extends AbstractConference<Props, *> {
         FULL_SCREEN_EVENTS.forEach(name =>
             document.addEventListener(name, this._onFullScreenChange));
 
-        const { dispatch, t } = this.props;
+        const {dispatch, t} = this.props;
 
         dispatch(connect());
 
         maybeShowSuboptimalExperienceNotification(dispatch, t);
 
         interfaceConfig.filmStripOnly
-            && dispatch(setToolboxAlwaysVisible(true));
+        && dispatch(setToolboxAlwaysVisible(true));
     }
 }
 

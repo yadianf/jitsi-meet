@@ -104,3 +104,7 @@ export { default as IconWifi1Bar } from './wifi-1.svg';
 export { default as IconWifi2Bars } from './wifi-2.svg';
 export { default as IconWifi3Bars } from './wifi-3.svg';
 export { default as IconYahoo } from './yahoo.svg';
+export { default as En } from './en.svg';
+export { default as Es } from './es.svg';
+export { default as Fr } from './fr.svg';
+export { default as Room } from './room.svg';
