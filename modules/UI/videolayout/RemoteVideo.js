@@ -326,8 +326,6 @@ export default class RemoteVideo extends SmallVideo {
     _setAudioVolume(newVal) {
         if (this._audioStreamElement) {
             this._audioStreamElement.volume = newVal;
-        } else {
-            alert('AudioStream not ready yet')
         }
     }
 

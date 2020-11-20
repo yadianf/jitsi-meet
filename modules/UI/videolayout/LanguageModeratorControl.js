@@ -29,7 +29,6 @@ import {LANG_TYPE} from "../../../react/features/translator-moderator/LanguageCo
 const LanguageVolumeControl = ({isLang, lang, langType, onVolumeChange}) => {
 
     useEffect(() => {
-        alert('lang processing')
         if (isLang) {
             const value = (lang === langType) ? 1 : 0;
             onVolumeChange && onVolumeChange(value)
