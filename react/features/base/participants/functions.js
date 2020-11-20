@@ -1,19 +1,19 @@
 // @flow
 
-import { getGravatarURL } from '@jitsi/js-utils/avatar';
+import {getGravatarURL} from '@jitsi/js-utils/avatar';
 
-import { JitsiParticipantConnectionStatus } from '../lib-jitsi-meet';
-import { MEDIA_TYPE, shouldRenderVideoTrack } from '../media';
-import { toState } from '../redux';
-import { getTrackByMediaTypeAndParticipant } from '../tracks';
-import { createDeferred } from '../util';
+import {JitsiParticipantConnectionStatus} from '../lib-jitsi-meet';
+import {MEDIA_TYPE, shouldRenderVideoTrack} from '../media';
+import {toState} from '../redux';
+import {getTrackByMediaTypeAndParticipant} from '../tracks';
+import {createDeferred} from '../util';
 
 import {
     JIGASI_PARTICIPANT_ICON,
     MAX_DISPLAY_NAME_LENGTH,
     PARTICIPANT_ROLE
 } from './constants';
-import { preloadImage } from './preloadImage';
+import {preloadImage} from './preloadImage';
 
 declare var config: Object;
 declare var interfaceConfig: Object;
@@ -35,6 +35,7 @@ const AVATAR_CHECKER_FUNCTIONS = [
         return participant && participant.email ? getGravatarURL(participant.email) : null;
     }
 ];
+
 /* eslint-enable arrow-body-style */
 
 /**
@@ -109,7 +110,7 @@ export function getNormalizedDisplayName(name: string) {
  * @returns {(Participant|undefined)}
  */
 export function getParticipantById(
-        stateful: Object | Function, id: string): ?Object {
+    stateful: Object | Function, id: string): ?Object {
     const participants = _getAllParticipants(stateful);
 
     return participants.find(p => p.id === id);
@@ -127,7 +128,7 @@ export function getParticipantById(
  * @returns {(Participant|undefined)}
  */
 export function getCurrentLan(
-    stateful: Object ): ?String {
+    stateful: Object): ?String {
 
     // return participants.find(p => p.id === id);
 }
@@ -173,8 +174,8 @@ export function getParticipantCountWithFake(stateful: Object | Function) {
  * @returns {string}
  */
 export function getParticipantDisplayName(
-        stateful: Object | Function,
-        id: string) {
+    stateful: Object | Function,
+    id: string) {
     const participant = getParticipantById(stateful, id);
 
     if (participant) {
@@ -203,7 +204,7 @@ export function getParticipantDisplayName(
  * @returns {string} - The presence status.
  */
 export function getParticipantPresenceStatus(
-        stateful: Object | Function, id: string) {
+    stateful: Object | Function, id: string) {
     if (!id) {
         return undefined;
     }
@@ -258,6 +259,11 @@ function _getAllParticipants(stateful) {
         Array.isArray(stateful)
             ? stateful
             : toState(stateful)['features/base/participants'] || []);
+}
+
+export function getLang(stateful) {
+    const state = toState(stateful)['features/base/langcontrol'] || {};
+    return state.lang;
 }
 
 /**
@@ -320,8 +326,8 @@ export function isIconUrl(icon: ?string | ?Object) {
  * @returns {boolean}
  */
 export function isLocalParticipantModerator(
-        stateful: Object | Function,
-        ignoreToken: ?boolean = false) {
+    stateful: Object | Function,
+    ignoreToken: ?boolean = false) {
     const state = toState(stateful);
     const localParticipant = getLocalParticipant(state);
 
@@ -332,8 +338,8 @@ export function isLocalParticipantModerator(
     return (
         localParticipant.role === PARTICIPANT_ROLE.MODERATOR
         && (ignoreToken
-                || !state['features/base/config'].enableUserRolesBasedOnToken
-                || !state['features/base/jwt'].isGuest));
+        || !state['features/base/config'].enableUserRolesBasedOnToken
+        || !state['features/base/jwt'].isGuest));
 }
 
 /**

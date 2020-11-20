@@ -4,7 +4,7 @@ import ToolbarButton from "./ToolbarButton";
 import {useTranslation} from 'react-i18next';
 import {LANG_TYPE} from "../../../translator-moderator/LanguageContext";
 import {connect} from "../../../base/redux";
-import {changeLang} from "../../../base/participants";
+import {changeLang, getLang} from "../../../base/participants";
 import Logger from 'jitsi-meet-logger';
 const logger = Logger.getLogger(__filename);
 
@@ -69,10 +69,9 @@ export function _mapDispatchToProps(dispatch: Function): $Shape<Props> {
 
 function _mapStateToProps(state) {
     // Only the local participant won't have id for the time when the conference is not yet joined.
-    const {lang} = state;
     logger.info(`render lanTool`, state);
     return {
-        langType: lang || LANG_TYPE.OPEN
+        langType: getLang(state) || LANG_TYPE.OPEN
     };
 }
 
