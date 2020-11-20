@@ -278,8 +278,8 @@ export default class RemoteVideo extends SmallVideo {
      * @param {int} newVal - The value to set the slider to.
      */
     _setAudioVolume(newVal) {
-        alert('update vol '+ newVal)
         if (this._audioStreamElement) {
+            alert('update vol ' + newVal)
             this._audioStreamElement.volume = newVal;
         }
     }
@@ -483,15 +483,20 @@ export default class RemoteVideo extends SmallVideo {
         }
     }
 
-    addVolumeControl(){
+    addVolumeControl() {
         const langControlContainer
             = this.container.querySelector('.langControl');
         ReactDOM.render(
-            <LanguageModeratorControl IamTranslator language={'ES'} onVolumeChange={this._setAudioVolume}>
+            <div>
+                kuku
+                <LanguageModeratorControl IamTranslator language={'ES'}
+                                          onVolumeChange={this._setAudioVolume}>
 
-            </LanguageModeratorControl>,
+                </LanguageModeratorControl>
+            </div>,
             langControlContainer);
     }
+
     /**
      * Unmounts the {@code PresenceLabel} component.
      *
