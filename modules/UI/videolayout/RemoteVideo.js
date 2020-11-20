@@ -133,10 +133,9 @@ export default class RemoteVideo extends SmallVideo {
         this.initBrowserSpecificProperties();
         this.updateRemoteVideoMenu();
         this.updateStatusBar();
-        this.updateLanControl();
         this.addAudioLevelIndicator();
         this.addPresenceLabel();
-
+        this.updateLanControl();
         return this.container;
     }
 
@@ -345,6 +344,9 @@ export default class RemoteVideo extends SmallVideo {
             this.isAudioMuted = isMuted;
         }
         this._generatePopupContent();
+        if (this._audioStreamElement) {
+            alert('ready')
+        }
     }
 
     /**
@@ -535,6 +537,7 @@ export default class RemoteVideo extends SmallVideo {
             // If the remote video menu was created before the audio stream was
             // attached we need to update the menu in order to show the volume
             // slider.
+            alert('stream ready')
             this.updateRemoteVideoMenu();
         }
     }
