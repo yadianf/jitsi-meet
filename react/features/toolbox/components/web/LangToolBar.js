@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {En, Es, Fr, Room} from "../../../base/icons/svg";
 import ToolbarButton from "./ToolbarButton";
 import {useTranslation} from 'react-i18next';
@@ -6,42 +6,51 @@ import {LANG_TYPE} from "../../../translator-moderator/LanguageContext";
 import {connect} from "../../../base/redux";
 import {changeLang, getLang} from "../../../base/participants";
 import Logger from 'jitsi-meet-logger';
+import OverflowMenuButton from "./OverflowMenuButton";
+
 const logger = Logger.getLogger(__filename);
 
 const LangToolBar = ({langType, useES, useEN, useFR, useOPEN}) => {
     const {t} = useTranslation('languages');
+    const [_overflowMenuVisible, _onSetOverflowVisible] = useState(false);
 
-    return (
-        <div>
-            <ToolbarButton
-                accessibilityLabel= {t('es')}
-                icon={Es}
-                onClick={(useES)}
-                toggled={langType === LANG_TYPE.ES}
-                tooltip={t('es')}/>
-            <ToolbarButton
-                accessibilityLabel=
-                    {t('en')}
-                icon={En}
-                onClick={useEN}
-                toggled={langType === LANG_TYPE.EN}
-                tooltip={t('en')}/>
-            <ToolbarButton
-                accessibilityLabel=
-                    {t('fr')}
-                icon={Fr}
-                onClick={useFR}
-                toggled={langType === LANG_TYPE.FR}
-                tooltip={t('fr')}/>
-            <ToolbarButton
-                accessibilityLabel=
-                    {'Abierto'}
-                toggled={langType === LANG_TYPE.OPEN}
-                icon={Room}
-                onClick={useOPEN}
-                tooltip={'Abierto'}/>
-        </div>
-    );
+    const overflowMenuContent = [
+        <ToolbarButton
+            accessibilityLabel={t('es')}
+            icon={Es}
+            onClick={(useES)}
+            toggled={langType === LANG_TYPE.ES}
+            tooltip={t('es')}/>,
+        <ToolbarButton
+            accessibilityLabel={t('en')}
+            icon={En}
+            onClick={useEN}
+            toggled={langType === LANG_TYPE.EN}
+            tooltip={t('en')}/>,
+        <ToolbarButton
+            accessibilityLabel=
+                {t('fr')}
+            icon={Fr}
+            onClick={useFR}
+            toggled={langType === LANG_TYPE.FR}
+            tooltip={t('fr')}/>,
+        <ToolbarButton
+            accessibilityLabel=
+                {'Abierto'}
+            toggled={langType === LANG_TYPE.OPEN}
+            icon={Room}
+            onClick={useOPEN}
+            tooltip={'Abierto'}/>
+    ];
+    return (<OverflowMenuButton
+        isOpen={_overflowMenuVisible}
+        onVisibilityChange={_onSetOverflowVisible}>
+        <ul
+            aria-label={t(langType.toLowerCase())}
+            className='overflow-menu'>
+            {overflowMenuContent}
+        </ul>
+    </OverflowMenuButton>)
 
 }
 
