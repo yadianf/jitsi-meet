@@ -47,6 +47,7 @@ function createContainer(spanId) {
         <div class = 'displayNameContainer'></div>
         <div class = 'avatar-container'></div>
         <div class ='presence-label-container'></div>
+        <div class ='langControl'></div>
         <span class = 'remotevideomenu'></span>`;
 
     const remoteVideosContainer
@@ -483,11 +484,13 @@ export default class RemoteVideo extends SmallVideo {
     }
 
     addVolumeControl(){
+        const langControlContainer
+            = this.container.querySelector('.langControl');
         ReactDOM.render(
             <LanguageModeratorControl IamTranslator language={'ES'} onVolumeChange={this._setAudioVolume}>
 
             </LanguageModeratorControl>,
-            this.container);
+            langControlContainer);
     }
     /**
      * Unmounts the {@code PresenceLabel} component.
