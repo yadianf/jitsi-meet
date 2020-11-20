@@ -163,8 +163,6 @@ function Thumbnail(props: Props) {
             </Container> }
 
             <ModeratorIndicator />
-            <ModeratorIndicator />
-            <ModeratorIndicator />
             { renderModeratorIndicator
                 && <View style = { styles.moderatorIndicatorContainer }>
                     <ModeratorIndicator />

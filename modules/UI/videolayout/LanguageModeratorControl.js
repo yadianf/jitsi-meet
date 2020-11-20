@@ -4,14 +4,16 @@ import {useLanguage} from "../../../react/features/contexts/LanguageContext";
 const LanguageModeratorControl = ({IamTranslator, language, onVolumeChange}) => {
     const {langType} = useLanguage();
     useEffect(() => {
+        alert('part' + langType)
         if (IamTranslator) {
-            alert((language === langType) ? 100 : 0)
-            onVolumeChange((language === langType) ? 100 : 0)
+            const value = (language === langType) ? 100 : 0;
+            alert('part' + value)
+            // onVolumeChange((language === langType) ? 100 : 0)
         }
     }, [langType, IamTranslator, language])
 
     return (
-        <div >
+        <div>
             control
         </div>
     );

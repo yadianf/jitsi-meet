@@ -84,7 +84,6 @@ export default class RemoteVideo extends SmallVideo {
         this.addRemoteVideoContainer();
         this.updateIndicators();
         this.updateDisplayName();
-        this.updateDisplayName();
         this.bindHoverHandler();
         this.flipX = false;
         this.isLocal = false;
@@ -279,6 +278,7 @@ export default class RemoteVideo extends SmallVideo {
      * @param {int} newVal - The value to set the slider to.
      */
     _setAudioVolume(newVal) {
+        alert('update vol '+ newVal)
         if (this._audioStreamElement) {
             this._audioStreamElement.volume = newVal;
         }
