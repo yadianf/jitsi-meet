@@ -32,7 +32,7 @@ const LanguageVolumeControl = ({lang,langType, onVolumeChange}) => {
     useEffect(() => {
         const value = (lang === langType) ? 1 : 0;
         alert('lang change for '+ lang + 'now yuo use ' + langType+ ', Volume '+ value);
-            // onVolumeChange((language === langType) ? 100 : 0)
+        onVolumeChange(value)
     }, [langType, lang])
 
     return (
@@ -61,7 +61,8 @@ class LanguageModeratorControl extends Component {
             isModerator,
             isLang,
             lang,
-            langType
+            langType,
+            onVolumeChange
         } = this.props;
 
         return (
@@ -69,7 +70,8 @@ class LanguageModeratorControl extends Component {
                 <p>{participant && participant.name}</p>
                 <p>{isModerator ? 'moderator' : 'no moderator'}</p>
                 {
-                    isLang && <LanguageVolumeControl lang={lang} langType={langType}/>
+                    isLang && <LanguageVolumeControl lang={lang} langType={langType}
+                                                     onVolumeChange={onVolumeChange}/>
                 }
             </div>
         );
