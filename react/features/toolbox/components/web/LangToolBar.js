@@ -5,7 +5,7 @@ import {useTranslation} from 'react-i18next';
 import {LANG_TYPE} from "../../../translator-moderator/LanguageContext";
 import {connect} from "../../../base/redux";
 import {changeLang} from "../../../base/participants";
-
+import Logger from 'jitsi-meet-logger';
 const logger = Logger.getLogger(__filename);
 
 const LangToolBar = ({langType, useES, useEN, useFR, useOPEN}) => {
