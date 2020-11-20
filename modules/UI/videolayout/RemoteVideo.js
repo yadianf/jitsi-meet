@@ -1,35 +1,30 @@
 /* global $, APP, interfaceConfig */
 
 /* eslint-disable no-unused-vars */
-import { AtlasKitThemeProvider } from '@atlaskit/theme';
+import {AtlasKitThemeProvider} from '@atlaskit/theme';
 import Logger from 'jitsi-meet-logger';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { I18nextProvider } from 'react-i18next';
-import { Provider } from 'react-redux';
+import {I18nextProvider} from 'react-i18next';
+import {Provider} from 'react-redux';
 
-import { i18next } from '../../../react/features/base/i18n';
-import {
-    JitsiParticipantConnectionStatus
-} from '../../../react/features/base/lib-jitsi-meet';
-import { MEDIA_TYPE } from '../../../react/features/base/media';
+import {i18next} from '../../../react/features/base/i18n';
+import {JitsiParticipantConnectionStatus} from '../../../react/features/base/lib-jitsi-meet';
 import {
     getParticipantById,
     getPinnedParticipant,
     pinParticipant
 } from '../../../react/features/base/participants';
-import { isRemoteTrackMuted } from '../../../react/features/base/tracks';
-import { PresenceLabel } from '../../../react/features/presence-status';
+import {PresenceLabel} from '../../../react/features/presence-status';
 import {
     REMOTE_CONTROL_MENU_STATES,
     RemoteVideoMenuTriggerButton
 } from '../../../react/features/remote-video-menu';
-import { LAYOUTS, getCurrentLayout } from '../../../react/features/video-layout';
+import {getCurrentLayout, LAYOUTS} from '../../../react/features/video-layout';
 /* eslint-enable no-unused-vars */
 import UIUtils from '../util/UIUtil';
 
 import SmallVideo from './SmallVideo';
-import {useLanguage} from "../../../react/features/contexts/LanguageContext";
 
 const logger = Logger.getLogger(__filename);
 
@@ -66,7 +61,7 @@ function createContainer(spanId) {
 /**
  *
  */
- class RemoteVideo extends SmallVideo {
+export default class RemoteVideo extends SmallVideo {
     /**
      * Creates new instance of the <tt>RemoteVideo</tt>.
      * @param user {JitsiParticipant} the user for whom remote video instance will
@@ -80,20 +75,13 @@ function createContainer(spanId) {
         this.user = user;
         this.id = user.getId();
         this.videoSpanId = `participant_${this.id}`;
-        console.log('--------------------------');
-        console.log('--------------------------');
-        console.log('--------------------------');
-        console.log('--------------------------');
-        console.log(user);
-        console.log('--------------------------');
-        console.log('--------------------------');
-        console.log('--------------------------');
 
         this._audioStreamElement = null;
         this._supportsRemoteControl = false;
         this.statsPopoverLocation = interfaceConfig.VERTICAL_FILMSTRIP ? 'left bottom' : 'top center';
         this.addRemoteVideoContainer();
         this.updateIndicators();
+        this.updateDisplayName();
         this.updateDisplayName();
         this.bindHoverHandler();
         this.flipX = false;
@@ -151,7 +139,7 @@ function createContainer(spanId) {
             return;
         }
 
-        const { controller } = APP.remoteControl;
+        const {controller} = APP.remoteControl;
         let remoteControlState = null;
         let onRemoteControlToggle;
 
@@ -187,18 +175,18 @@ function createContainer(spanId) {
         }
 
         ReactDOM.render(
-            <Provider store = { APP.store }>
-                <I18nextProvider i18n = { i18next }>
-                    <AtlasKitThemeProvider mode = 'dark'>
+            <Provider store={APP.store}>
+                <I18nextProvider i18n={i18next}>
+                    <AtlasKitThemeProvider mode='dark'>
                         <RemoteVideoMenuTriggerButton
-                            initialVolumeValue = { initialVolumeValue }
-                            menuPosition = { remoteMenuPosition }
+                            initialVolumeValue={initialVolumeValue}
+                            menuPosition={remoteMenuPosition}
                             onMenuDisplay
-                                = {this._onRemoteVideoMenuDisplay.bind(this)}
-                            onRemoteControlToggle = { onRemoteControlToggle }
-                            onVolumeChange = { onVolumeChange }
-                            participantID = { participantID }
-                            remoteControlState = { remoteControlState } />
+                                ={this._onRemoteVideoMenuDisplay.bind(this)}
+                            onRemoteControlToggle={onRemoteControlToggle}
+                            onVolumeChange={onVolumeChange}
+                            participantID={participantID}
+                            remoteControlState={remoteControlState}/>
                     </AtlasKitThemeProvider>
                 </I18nextProvider>
             </Provider>,
@@ -249,7 +237,7 @@ function createContainer(spanId) {
                 APP.UI.messageHandler.notify(
                     'dialog.remoteControlTitle',
                     result === false ? 'dialog.remoteControlDeniedMessage' : 'dialog.remoteControlAllowedMessage',
-                    { user: this.user.getDisplayName() || interfaceConfig.DEFAULT_REMOTE_DISPLAY_NAME }
+                    {user: this.user.getDisplayName() || interfaceConfig.DEFAULT_REMOTE_DISPLAY_NAME}
                 );
                 if (result === true) {
                     // the remote control permissions has been granted
@@ -267,7 +255,7 @@ function createContainer(spanId) {
                 APP.UI.messageHandler.notify(
                     'dialog.remoteControlTitle',
                     'dialog.remoteControlErrorMessage',
-                    { user: this.user.getDisplayName() || interfaceConfig.DEFAULT_REMOTE_DISPLAY_NAME }
+                    {user: this.user.getDisplayName() || interfaceConfig.DEFAULT_REMOTE_DISPLAY_NAME}
                 );
             });
         this.updateRemoteVideoMenu();
@@ -342,7 +330,7 @@ function createContainer(spanId) {
      */
     isVideoPlayable() {
         const participant = getParticipantById(APP.store.getState(), this.id);
-        const { connectionStatus, mutedWhileDisconnected } = participant || {};
+        const {connectionStatus, mutedWhileDisconnected} = participant || {};
 
         return super.isVideoPlayable()
             && this._canPlayEventReceived
@@ -481,11 +469,11 @@ function createContainer(spanId) {
 
         if (presenceLabelContainer) {
             ReactDOM.render(
-                <Provider store = { APP.store }>
-                    <I18nextProvider i18n = { i18next }>
+                <Provider store={APP.store}>
+                    <I18nextProvider i18n={i18next}>
                         <PresenceLabel
-                            participantID = { this.id }
-                            className = 'presence-label' />
+                            participantID={this.id}
+                            className='presence-label'/>
                     </I18nextProvider>
                 </Provider>,
                 presenceLabelContainer);
@@ -505,9 +493,3 @@ function createContainer(spanId) {
         }
     }
 }
-
-const RemoteVideoWrapper = (props)=>{
-     const {langType} =useLanguage();
-     return <RemoteVideo langType={langType} {...props}/>
-}
-export default RemoteVideoWrapper;
