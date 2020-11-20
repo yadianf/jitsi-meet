@@ -162,6 +162,9 @@ function Thumbnail(props: Props) {
                 <DisplayNameLabel participantId = { participantId } />
             </Container> }
 
+            <ModeratorIndicator />
+            <ModeratorIndicator />
+            <ModeratorIndicator />
             { renderModeratorIndicator
                 && <View style = { styles.moderatorIndicatorContainer }>
                     <ModeratorIndicator />

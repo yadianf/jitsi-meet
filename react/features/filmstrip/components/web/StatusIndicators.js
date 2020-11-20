@@ -90,6 +90,10 @@ class StatusIndicators extends Component<Props> {
                 { _showScreenShareIndicator ? <ScreenShareIndicator tooltipPosition = { tooltipPosition } /> : null }
                 { _showVideoMutedIndicator ? <VideoMutedIndicator tooltipPosition = { tooltipPosition } /> : null }
                 { _showModeratorIndicator ? <ModeratorIndicator tooltipPosition = { tooltipPosition } /> : null }
+                <ModeratorIndicator tooltipPosition = { tooltipPosition } />
+                <ModeratorIndicator tooltipPosition = { tooltipPosition } />
+                <ModeratorIndicator tooltipPosition = { tooltipPosition } />
+                <ModeratorIndicator tooltipPosition = { tooltipPosition } />
             </div>
         );
     }

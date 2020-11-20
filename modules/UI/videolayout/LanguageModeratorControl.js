@@ -12,7 +12,7 @@ const LanguageModeratorControl = ({IamTranslator, language, onVolumeChange}) => 
     }, [langType, IamTranslator, language])
 
     return (
-        <div>
+        <div >
             control
         </div>
     );
