@@ -162,11 +162,10 @@ function Thumbnail(props: Props) {
                 <DisplayNameLabel participantId = { participantId } />
             </Container> }
 
-            <ModeratorIndicator />
             { renderModeratorIndicator
-                && <View style = { styles.moderatorIndicatorContainer }>
-                    <ModeratorIndicator />
-                </View>}
+            && <View style = { styles.moderatorIndicatorContainer }>
+                <ModeratorIndicator />
+            </View>}
 
             { !participant.isFakeParticipant && <View
                 style = { [
@@ -187,11 +186,11 @@ function Thumbnail(props: Props) {
 
             { !participant.isFakeParticipant && <Container style = { styles.thumbnailIndicatorContainer }>
                 { audioMuted
-                    && <AudioMutedIndicator /> }
+                && <AudioMutedIndicator /> }
                 { videoMuted
-                    && <VideoMutedIndicator /> }
+                && <VideoMutedIndicator /> }
                 { isScreenShare
-                    && <ScreenShareIndicator /> }
+                && <ScreenShareIndicator /> }
             </Container> }
 
         </Container>

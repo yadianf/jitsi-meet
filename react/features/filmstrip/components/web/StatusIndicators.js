@@ -74,14 +74,14 @@ class StatusIndicators extends Component<Props> {
         let tooltipPosition;
 
         switch (_currentLayout) {
-        case LAYOUTS.TILE_VIEW:
-            tooltipPosition = 'right';
-            break;
-        case LAYOUTS.VERTICAL_FILMSTRIP_VIEW:
-            tooltipPosition = 'left';
-            break;
-        default:
-            tooltipPosition = 'top';
+            case LAYOUTS.TILE_VIEW:
+                tooltipPosition = 'right';
+                break;
+            case LAYOUTS.VERTICAL_FILMSTRIP_VIEW:
+                tooltipPosition = 'left';
+                break;
+            default:
+                tooltipPosition = 'top';
         }
 
         return (
@@ -90,10 +90,6 @@ class StatusIndicators extends Component<Props> {
                 { _showScreenShareIndicator ? <ScreenShareIndicator tooltipPosition = { tooltipPosition } /> : null }
                 { _showVideoMutedIndicator ? <VideoMutedIndicator tooltipPosition = { tooltipPosition } /> : null }
                 { _showModeratorIndicator ? <ModeratorIndicator tooltipPosition = { tooltipPosition } /> : null }
-                <ModeratorIndicator tooltipPosition = { tooltipPosition } />
-                <ModeratorIndicator tooltipPosition = { tooltipPosition } />
-                <ModeratorIndicator tooltipPosition = { tooltipPosition } />
-                <ModeratorIndicator tooltipPosition = { tooltipPosition } />
             </div>
         );
     }
@@ -110,7 +106,7 @@ class StatusIndicators extends Component<Props> {
  *     _showModeratorIndicator: boolean,
  *     _showVideoMutedIndicator: boolean
  * }}
-*/
+ */
 function _mapStateToProps(state, ownProps) {
     const { participantID } = ownProps;
 

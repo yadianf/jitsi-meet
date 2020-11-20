@@ -1,31 +1,34 @@
 /* global $, APP, interfaceConfig */
 
 /* eslint-disable no-unused-vars */
-import {AtlasKitThemeProvider} from '@atlaskit/theme';
+import { AtlasKitThemeProvider } from '@atlaskit/theme';
 import Logger from 'jitsi-meet-logger';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {I18nextProvider} from 'react-i18next';
-import {Provider} from 'react-redux';
+import { I18nextProvider } from 'react-i18next';
+import { Provider } from 'react-redux';
 
-import {i18next} from '../../../react/features/base/i18n';
-import {JitsiParticipantConnectionStatus} from '../../../react/features/base/lib-jitsi-meet';
+import { i18next } from '../../../react/features/base/i18n';
+import {
+    JitsiParticipantConnectionStatus
+} from '../../../react/features/base/lib-jitsi-meet';
+import { MEDIA_TYPE } from '../../../react/features/base/media';
 import {
     getParticipantById,
     getPinnedParticipant,
     pinParticipant
 } from '../../../react/features/base/participants';
-import {PresenceLabel} from '../../../react/features/presence-status';
+import { isRemoteTrackMuted } from '../../../react/features/base/tracks';
+import { PresenceLabel } from '../../../react/features/presence-status';
 import {
     REMOTE_CONTROL_MENU_STATES,
     RemoteVideoMenuTriggerButton
 } from '../../../react/features/remote-video-menu';
-import {getCurrentLayout, LAYOUTS} from '../../../react/features/video-layout';
+import { LAYOUTS, getCurrentLayout } from '../../../react/features/video-layout';
 /* eslint-enable no-unused-vars */
 import UIUtils from '../util/UIUtil';
 
 import SmallVideo from './SmallVideo';
-import LanguageModeratorControl from './LanguageModeratorControl';
 
 const logger = Logger.getLogger(__filename);
 
@@ -47,7 +50,6 @@ function createContainer(spanId) {
         <div class = 'displayNameContainer'></div>
         <div class = 'avatar-container'></div>
         <div class ='presence-label-container'></div>
-        <div class ='langControl'></div>
         <span class = 'remotevideomenu'></span>`;
 
     const remoteVideosContainer
@@ -122,7 +124,6 @@ export default class RemoteVideo extends SmallVideo {
         this.updateStatusBar();
         this.addAudioLevelIndicator();
         this.addPresenceLabel();
-        this.addVolumeControl();
 
         return this.container;
     }
@@ -141,7 +142,7 @@ export default class RemoteVideo extends SmallVideo {
             return;
         }
 
-        const {controller} = APP.remoteControl;
+        const { controller } = APP.remoteControl;
         let remoteControlState = null;
         let onRemoteControlToggle;
 
@@ -177,18 +178,18 @@ export default class RemoteVideo extends SmallVideo {
         }
 
         ReactDOM.render(
-            <Provider store={APP.store}>
-                <I18nextProvider i18n={i18next}>
-                    <AtlasKitThemeProvider mode='dark'>
+            <Provider store = { APP.store }>
+                <I18nextProvider i18n = { i18next }>
+                    <AtlasKitThemeProvider mode = 'dark'>
                         <RemoteVideoMenuTriggerButton
-                            initialVolumeValue={initialVolumeValue}
-                            menuPosition={remoteMenuPosition}
+                            initialVolumeValue = { initialVolumeValue }
+                            menuPosition = { remoteMenuPosition }
                             onMenuDisplay
-                                ={this._onRemoteVideoMenuDisplay.bind(this)}
-                            onRemoteControlToggle={onRemoteControlToggle}
-                            onVolumeChange={onVolumeChange}
-                            participantID={participantID}
-                            remoteControlState={remoteControlState}/>
+                                = {this._onRemoteVideoMenuDisplay.bind(this)}
+                            onRemoteControlToggle = { onRemoteControlToggle }
+                            onVolumeChange = { onVolumeChange }
+                            participantID = { participantID }
+                            remoteControlState = { remoteControlState } />
                     </AtlasKitThemeProvider>
                 </I18nextProvider>
             </Provider>,
@@ -239,7 +240,7 @@ export default class RemoteVideo extends SmallVideo {
                 APP.UI.messageHandler.notify(
                     'dialog.remoteControlTitle',
                     result === false ? 'dialog.remoteControlDeniedMessage' : 'dialog.remoteControlAllowedMessage',
-                    {user: this.user.getDisplayName() || interfaceConfig.DEFAULT_REMOTE_DISPLAY_NAME}
+                    { user: this.user.getDisplayName() || interfaceConfig.DEFAULT_REMOTE_DISPLAY_NAME }
                 );
                 if (result === true) {
                     // the remote control permissions has been granted
@@ -257,7 +258,7 @@ export default class RemoteVideo extends SmallVideo {
                 APP.UI.messageHandler.notify(
                     'dialog.remoteControlTitle',
                     'dialog.remoteControlErrorMessage',
-                    {user: this.user.getDisplayName() || interfaceConfig.DEFAULT_REMOTE_DISPLAY_NAME}
+                    { user: this.user.getDisplayName() || interfaceConfig.DEFAULT_REMOTE_DISPLAY_NAME }
                 );
             });
         this.updateRemoteVideoMenu();
@@ -279,7 +280,6 @@ export default class RemoteVideo extends SmallVideo {
      */
     _setAudioVolume(newVal) {
         if (this._audioStreamElement) {
-            alert('update vol ' + newVal)
             this._audioStreamElement.volume = newVal;
         }
     }
@@ -333,7 +333,7 @@ export default class RemoteVideo extends SmallVideo {
      */
     isVideoPlayable() {
         const participant = getParticipantById(APP.store.getState(), this.id);
-        const {connectionStatus, mutedWhileDisconnected} = participant || {};
+        const { connectionStatus, mutedWhileDisconnected } = participant || {};
 
         return super.isVideoPlayable()
             && this._canPlayEventReceived
@@ -472,29 +472,15 @@ export default class RemoteVideo extends SmallVideo {
 
         if (presenceLabelContainer) {
             ReactDOM.render(
-                <Provider store={APP.store}>
-                    <I18nextProvider i18n={i18next}>
+                <Provider store = { APP.store }>
+                    <I18nextProvider i18n = { i18next }>
                         <PresenceLabel
-                            participantID={this.id}
-                            className='presence-label'/>
+                            participantID = { this.id }
+                            className = 'presence-label' />
                     </I18nextProvider>
                 </Provider>,
                 presenceLabelContainer);
         }
-    }
-
-    addVolumeControl() {
-        const langControlContainer
-            = this.container.querySelector('.langControl');
-        ReactDOM.render(
-            <div>
-                kuku
-                <LanguageModeratorControl IamTranslator language={'ES'}
-                                          onVolumeChange={this._setAudioVolume}>
-
-                </LanguageModeratorControl>
-            </div>,
-            langControlContainer);
     }
 
     /**

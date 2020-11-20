@@ -22,6 +22,7 @@ const LanguageVolumeControl = ({IamTranslator, language, onVolumeChange}) => {
 
 
 class LanguageModeratorControl {
+    
     render() {
         return (
             <span>test<LanguageVolumeControl/></span>
