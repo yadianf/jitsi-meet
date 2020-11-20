@@ -60,8 +60,6 @@ class LanguageModeratorControl extends Component {
      */
     render() {
         const {
-            participant,
-            isModerator,
             isLang,
             lang,
             langType,
