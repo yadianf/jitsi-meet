@@ -46,7 +46,8 @@ function createContainer(spanId) {
         <div class = 'videocontainer__hoverOverlay'></div>
         <div class = 'displayNameContainer'></div>
         <div class = 'avatar-container'></div>
-        <div class ='presence-label-container'></div>
+        <div class = 'presence-label-container'></div>
+        <div class = 'lan-control'></div>
         <span class = 'remotevideomenu'></span>`;
 
     const remoteVideosContainer
@@ -131,6 +132,7 @@ export default class RemoteVideo extends SmallVideo {
         this.initBrowserSpecificProperties();
         this.updateRemoteVideoMenu();
         this.updateStatusBar();
+        this.updateLanControl();
         this.addAudioLevelIndicator();
         this.addPresenceLabel();
 
@@ -146,6 +148,26 @@ export default class RemoteVideo extends SmallVideo {
      */
     _isHovered() {
         return super._isHovered() || this.popupMenuIsHovered;
+    }
+
+    /**
+     * Create or updates the ReactElement for displaying status indicators about
+     * audio mute, video mute, and moderator status.
+     *
+     * @returns {void}
+     */
+    updateLanControl() {
+        const langContainer = this.container.querySelector('.lan-control');
+        logger.info(`render lancontrol ${this.id}`);
+        if (!langContainer) {
+            return;
+        }
+
+        ReactDOM.render(
+            <Provider store = { APP.store }>
+                <span>test</span>
+            </Provider>,
+            langContainer);
     }
 
     /**
