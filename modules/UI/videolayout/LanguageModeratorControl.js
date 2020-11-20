@@ -36,7 +36,7 @@
 import React, {Component} from 'react';
 import {
     getLocalParticipant,
-    getParticipantById
+    getParticipantById, PARTICIPANT_ROLE
 } from "../../../react/features/base/participants";
 import {connect} from "../../../react/features/base/redux";
 
@@ -54,12 +54,13 @@ class LanguageModeratorControl extends Component {
      */
     render() {
         const {
-            participant
+            participant,
+            isModerator
         } = this.props;
         return (
             <div>
-                <span>test</span>
-                <pre>{JSON.stringify(participant, null, 2)}</pre>
+                <p>{participant && participant.name}</p>
+                <p>{isModerator?'moderator':'no moderator'}</p>
             </div>
         );
     }
@@ -83,7 +84,8 @@ function _mapStateToProps(state, ownProps) {
     const participant = participantID ? getParticipantById(state, participantID) : getLocalParticipant(state);
 
     return {
-        participant
+        participant,
+        isModerator: participant && participant.role === PARTICIPANT_ROLE.MODERATOR
     };
 }
 
