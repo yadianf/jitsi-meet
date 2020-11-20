@@ -13,7 +13,6 @@ const LangToolBar = ({langType, useES, useEN, useFR, useOPEN}) => {
 
     return (
         <div>
-            <pre>{JSON.stringify(langType, null, 2)}</pre>
             <ToolbarButton
                 accessibilityLabel=
                     {t('es')}
@@ -68,8 +67,6 @@ export function _mapDispatchToProps(dispatch: Function): $Shape<Props> {
 }
 
 function _mapStateToProps(state) {
-    // Only the local participant won't have id for the time when the conference is not yet joined.
-    logger.info(`render lanTool`, state);
     return {
         langType: getLang(state) || LANG_TYPE.OPEN
     };
