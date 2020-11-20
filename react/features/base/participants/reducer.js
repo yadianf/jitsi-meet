@@ -103,7 +103,7 @@ ReducerRegistry.register('features/base/participants', (state = [], action) => {
 ReducerRegistry.register('features/base/langcontrol', (state = {lang: LANG_TYPE.OPEN}, action) => {
   switch (action.type) {
     case CHANGE_LAN:
-      return state.lang = state.lang;
+      return state.lang = action.lang;
   }
   return state;
 });
