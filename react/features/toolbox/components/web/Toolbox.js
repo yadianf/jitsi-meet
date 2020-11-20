@@ -1253,7 +1253,7 @@ class Toolbox extends Component<Props, State> {
         );
 
         const showOverflowMenu = this.state.windowWidth >= verySmallThreshold || isMobileBrowser();
-        const isSmallWidth = this.state.windowWidth >= smallThreshold || isMobileBrowser();
+        const isSmallWidth = this.state.windowWidth <= 750 || isMobileBrowser();
 
         if (this._shouldShowButton('chat')) {
             buttonsLeft.push('chat');
