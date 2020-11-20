@@ -1,4 +1,5 @@
 import React, {memo, useEffect} from 'react'
+import React, {memo, useEffect} from 'prop'
 import {useLanguage} from "../../../react/features/contexts/LanguageContext";
 
 const LanguageModeratorControl = ({IamTranslator, language, onVolumeChange}) => {

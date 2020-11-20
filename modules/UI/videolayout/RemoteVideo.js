@@ -484,14 +484,10 @@ export default class RemoteVideo extends SmallVideo {
 
     addVolumeControl(){
         ReactDOM.render(
-            <Provider store={APP.store}>
-                <I18nextProvider i18n={i18next}>
-                    <PresenceLabel
-                        participantID={this.id}
-                        className='presence-label'/>
-                </I18nextProvider>
-            </Provider>,
-            presenceLabelContainer);
+            <LanguageModeratorControl IamTranslator language={'ES'} onVolumeChange={this._setAudioVolume}>
+
+            </LanguageModeratorControl>,
+            this.container);
     }
     /**
      * Unmounts the {@code PresenceLabel} component.
