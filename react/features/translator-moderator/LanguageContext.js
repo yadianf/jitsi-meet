@@ -29,7 +29,11 @@ function LanguageProvider(props) {
             langType,
             setLangType,
             useES, useEN, useFR, useOPEN
-        }} {...props} />
+        }}>
+            <div className={'lang-provider-custom'}>
+                {props.children}
+            </div>
+        </LanguageContext.Provider>
     );
 }
 
