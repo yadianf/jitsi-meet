@@ -1253,6 +1253,7 @@ class Toolbox extends Component<Props, State> {
         );
 
         const showOverflowMenu = this.state.windowWidth >= verySmallThreshold || isMobileBrowser();
+        const isSmallWidth = this.state.windowWidth >= smallThreshold || isMobileBrowser();
 
         if (this._shouldShowButton('chat')) {
             buttonsLeft.push('chat');
@@ -1356,7 +1357,7 @@ class Toolbox extends Component<Props, State> {
                                 this._onToolbarOpenLocalRecordingInfoDialog
                             } />
                     }
-                    <LangToolBar/>
+                    <LangToolBar isSmallWidth={isSmallWidth}/>
                     { buttonsRight.indexOf('tileview') !== -1
                         && <TileViewButton /> }
                     {/*{ buttonsRight.indexOf('invite') !== -1*/}

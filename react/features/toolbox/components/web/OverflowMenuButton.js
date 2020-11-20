@@ -64,7 +64,7 @@ class OverflowMenuButton extends Component<Props> {
      */
     render() {
         const { children, isOpen, t } = this.props;
-
+        const icon = this.props.icon || IconMenuThumb;
         return (
             <div className = 'toolbox-button-wth-dialog'>
                 <InlineDialog
@@ -75,7 +75,7 @@ class OverflowMenuButton extends Component<Props> {
                     <ToolbarButton
                         accessibilityLabel =
                             { t('toolbar.accessibilityLabel.moreActions') }
-                        icon = { IconMenuThumb }
+                        icon = { icon }
                         onClick = { this._onToggleDialogVisibility }
                         toggled = { isOpen }
                         tooltip = { t('toolbar.moreActions') } />

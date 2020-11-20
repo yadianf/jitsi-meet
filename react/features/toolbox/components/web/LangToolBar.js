@@ -10,27 +10,34 @@ import OverflowMenuButton from "./OverflowMenuButton";
 
 const logger = Logger.getLogger(__filename);
 
-const LangToolBar = ({langType, useES, useEN, useFR, useOPEN}) => {
+const ICON = {
+    [LANG_TYPE.OPEN]: Room,
+    [LANG_TYPE.FR]: Fr,
+    [LANG_TYPE.EN]: En,
+    [LANG_TYPE.ES]: Es,
+}
+
+const LangToolBar = ({langType, useES, useEN, useFR, useOPEN, isSmallWidth}) => {
     const {t} = useTranslation('languages');
     const [_overflowMenuVisible, _onSetOverflowVisible] = useState(false);
 
     const overflowMenuContent = [
         <ToolbarButton
             accessibilityLabel={t('es')}
-            icon={Es}
+            icon={ICON.ES}
             onClick={(useES)}
             toggled={langType === LANG_TYPE.ES}
             tooltip={t('es')}/>,
         <ToolbarButton
             accessibilityLabel={t('en')}
-            icon={En}
+            icon={ICON.EN}
             onClick={useEN}
             toggled={langType === LANG_TYPE.EN}
             tooltip={t('en')}/>,
         <ToolbarButton
             accessibilityLabel=
                 {t('fr')}
-            icon={Fr}
+            icon={ICON.FR}
             onClick={useFR}
             toggled={langType === LANG_TYPE.FR}
             tooltip={t('fr')}/>,
@@ -38,19 +45,23 @@ const LangToolBar = ({langType, useES, useEN, useFR, useOPEN}) => {
             accessibilityLabel=
                 {'Abierto'}
             toggled={langType === LANG_TYPE.OPEN}
-            icon={Room}
+            icon={ICON.OPEN}
             onClick={useOPEN}
             tooltip={'Abierto'}/>
     ];
-    return (<OverflowMenuButton
-        isOpen={_overflowMenuVisible}
-        onVisibilityChange={_onSetOverflowVisible}>
-        <ul
-            aria-label={t(langType.toLowerCase())}
-            className='overflow-menu'>
-            {overflowMenuContent}
-        </ul>
-    </OverflowMenuButton>)
+    if (isSmallWidth)
+        return (<OverflowMenuButton
+            icon={ICON[langType]}
+            isOpen={_overflowMenuVisible}
+            onVisibilityChange={_onSetOverflowVisible}>
+            <ul
+                aria-label={t(langType.toLowerCase())}
+                className='overflow-menu'>
+                {overflowMenuContent}
+            </ul>
+        </OverflowMenuButton>)
+
+    return overflowMenuContent;
 
 }
 
