@@ -15,7 +15,10 @@ function LanguageProvider(props) {
     const {useES, useEN, useFR, useOPEN} = useMemo(() => {
         return {
             useES: () => setLangType(LANG_TYPE.ES),
-            useEN: () => setLangType(LANG_TYPE.EN),
+            useEN: () => {
+                setLangType(LANG_TYPE.EN);
+                alert("EN")
+            },
             useFR: () => setLangType(LANG_TYPE.FR),
             useOPEN: () => setLangType(LANG_TYPE.OPEN),
         }
