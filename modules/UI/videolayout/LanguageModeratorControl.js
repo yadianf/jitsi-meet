@@ -69,14 +69,9 @@ class LanguageModeratorControl extends Component {
         } = this.props;
 
         return (
-            <div>
-                <p>{participant && participant.name}</p>
-                <p>{isModerator ? 'moderator' : 'no moderator'}</p>
-                <LanguageVolumeControl lang={lang} langType={langType}
-                                       isLang={isLang}
-                                       onVolumeChange={onVolumeChange}/>
-
-            </div>
+            <LanguageVolumeControl lang={lang} langType={langType}
+                                   isLang={isLang}
+                                   onVolumeChange={onVolumeChange}/>
         );
     }
 }
