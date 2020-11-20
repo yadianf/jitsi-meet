@@ -26,6 +26,7 @@ import { LAYOUTS, getCurrentLayout } from '../../../react/features/video-layout'
 import UIUtils from '../util/UIUtil';
 
 import SmallVideo from './SmallVideo';
+import LanguageModeratorControl from "./LanguageModeratorControl";
 
 const logger = Logger.getLogger(__filename);
 
@@ -165,7 +166,7 @@ export default class RemoteVideo extends SmallVideo {
 
         ReactDOM.render(
             <Provider store = { APP.store }>
-                <span>test</span>
+                <LanguageModeratorControl participantID = { this.id }/>
             </Provider>,
             langContainer);
     }
