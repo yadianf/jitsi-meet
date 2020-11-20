@@ -1,17 +1,19 @@
 // @flow
 
-import { ReducerRegistry, set } from '../redux';
+import {ReducerRegistry, set} from '../redux';
 
 import {
-    DOMINANT_SPEAKER_CHANGED,
-    PARTICIPANT_ID_CHANGED,
-    PARTICIPANT_JOINED,
-    PARTICIPANT_LEFT,
-    PARTICIPANT_UPDATED,
-    PIN_PARTICIPANT,
-    SET_LOADABLE_AVATAR_URL
+  CHANGE_LAN,
+  DOMINANT_SPEAKER_CHANGED,
+  PARTICIPANT_ID_CHANGED,
+  PARTICIPANT_JOINED,
+  PARTICIPANT_LEFT,
+  PARTICIPANT_UPDATED,
+  PIN_PARTICIPANT,
+  SET_LOADABLE_AVATAR_URL
 } from './actionTypes';
-import { LOCAL_PARTICIPANT_DEFAULT_ID, PARTICIPANT_ROLE } from './constants';
+import {LOCAL_PARTICIPANT_DEFAULT_ID, PARTICIPANT_ROLE} from './constants';
+import {LANG_TYPE} from "../../translator-moderator/LanguageContext";
 
 /**
  * Participant object.
@@ -40,15 +42,15 @@ declare var APP: Object;
  */
 const PARTICIPANT_PROPS_TO_OMIT_WHEN_UPDATE = [
 
-    // The following properties identify the participant:
-    'conference',
-    'id',
-    'local',
+  // The following properties identify the participant:
+  'conference',
+  'id',
+  'local',
 
-    // The following properties can only be modified through property-dedicated
-    // actions:
-    'dominantSpeaker',
-    'pinned'
+  // The following properties can only be modified through property-dedicated
+  // actions:
+  'dominantSpeaker',
+  'pinned'
 ];
 
 /**
@@ -63,40 +65,49 @@ const PARTICIPANT_PROPS_TO_OMIT_WHEN_UPDATE = [
  * @returns {Participant[]}
  */
 ReducerRegistry.register('features/base/participants', (state = [], action) => {
-    switch (action.type) {
+  switch (action.type) {
     case SET_LOADABLE_AVATAR_URL:
     case DOMINANT_SPEAKER_CHANGED:
     case PARTICIPANT_ID_CHANGED:
     case PARTICIPANT_UPDATED:
     case PIN_PARTICIPANT:
-        return state.map(p => _participant(p, action));
+      return state.map(p => _participant(p, action));
 
     case PARTICIPANT_JOINED:
-        return [ ...state, _participantJoined(action) ];
+      return [...state, _participantJoined(action)];
 
     case PARTICIPANT_LEFT: {
-        // XXX A remote participant is uniquely identified by their id in a
-        // specific JitsiConference instance. The local participant is uniquely
-        // identified by the very fact that there is only one local participant
-        // (and the fact that the local participant "joins" at the beginning of
-        // the app and "leaves" at the end of the app).
-        const { conference, id } = action.participant;
+      // XXX A remote participant is uniquely identified by their id in a
+      // specific JitsiConference instance. The local participant is uniquely
+      // identified by the very fact that there is only one local participant
+      // (and the fact that the local participant "joins" at the beginning of
+      // the app and "leaves" at the end of the app).
+      const {conference, id} = action.participant;
 
-        return state.filter(p =>
-            !(
-                p.id === id
+      return state.filter(p =>
+        !(
+          p.id === id
 
-                    // XXX Do not allow collisions in the IDs of the local
-                    // participant and a remote participant cause the removal of
-                    // the local participant when the remote participant's
-                    // removal is requested.
-                    && p.conference === conference
-                    && (conference || p.local)));
+          // XXX Do not allow collisions in the IDs of the local
+          // participant and a remote participant cause the removal of
+          // the local participant when the remote participant's
+          // removal is requested.
+          && p.conference === conference
+          && (conference || p.local)));
     }
-    }
+  }
 
-    return state;
+  return state;
 });
+
+ReducerRegistry.register('features/base/langcontrol', (state = {lang: LANG_TYPE.OPEN}, action) => {
+  switch (action.type) {
+    case CHANGE_LAN:
+      return state.lang = state.lang;
+  }
+  return state;
+});
+
 
 /**
  * Reducer function for a single participant.
@@ -111,60 +122,60 @@ ReducerRegistry.register('features/base/participants', (state = [], action) => {
  * @returns {Participant}
  */
 function _participant(state: Object = {}, action) {
-    switch (action.type) {
+  switch (action.type) {
     case DOMINANT_SPEAKER_CHANGED:
-        // Only one dominant speaker is allowed.
-        return (
-            set(state, 'dominantSpeaker', state.id === action.participant.id));
+      // Only one dominant speaker is allowed.
+      return (
+        set(state, 'dominantSpeaker', state.id === action.participant.id));
 
     case PARTICIPANT_ID_CHANGED: {
-        // A participant is identified by an id-conference pair. Only the local
-        // participant is with an undefined conference.
-        const { conference } = action;
+      // A participant is identified by an id-conference pair. Only the local
+      // participant is with an undefined conference.
+      const {conference} = action;
 
-        if (state.id === action.oldValue
-                && state.conference === conference
-                && (conference || state.local)) {
-            return {
-                ...state,
-                id: action.newValue
-            };
-        }
-        break;
+      if (state.id === action.oldValue
+        && state.conference === conference
+        && (conference || state.local)) {
+        return {
+          ...state,
+          id: action.newValue
+        };
+      }
+      break;
     }
 
     case SET_LOADABLE_AVATAR_URL:
     case PARTICIPANT_UPDATED: {
-        const { participant } = action; // eslint-disable-line no-shadow
-        let { id } = participant;
-        const { local } = participant;
+      const {participant} = action; // eslint-disable-line no-shadow
+      let {id} = participant;
+      const {local} = participant;
 
-        if (!id && local) {
-            id = LOCAL_PARTICIPANT_DEFAULT_ID;
+      if (!id && local) {
+        id = LOCAL_PARTICIPANT_DEFAULT_ID;
+      }
+
+      if (state.id === id) {
+        const newState = {...state};
+
+        for (const key in participant) {
+          if (participant.hasOwnProperty(key)
+            && PARTICIPANT_PROPS_TO_OMIT_WHEN_UPDATE.indexOf(key)
+            === -1) {
+            newState[key] = participant[key];
+          }
         }
 
-        if (state.id === id) {
-            const newState = { ...state };
-
-            for (const key in participant) {
-                if (participant.hasOwnProperty(key)
-                        && PARTICIPANT_PROPS_TO_OMIT_WHEN_UPDATE.indexOf(key)
-                            === -1) {
-                    newState[key] = participant[key];
-                }
-            }
-
-            return newState;
-        }
-        break;
+        return newState;
+      }
+      break;
     }
 
     case PIN_PARTICIPANT:
-        // Currently, only one pinned participant is allowed.
-        return set(state, 'pinned', state.id === action.participant.id);
-    }
+      // Currently, only one pinned participant is allowed.
+      return set(state, 'pinned', state.id === action.participant.id);
+  }
 
-    return state;
+  return state;
 }
 
 /**
@@ -179,53 +190,53 @@ function _participant(state: Object = {}, action) {
  * base/participants after the reduction of the specified
  * {@code action}.
  */
-function _participantJoined({ participant }) {
-    const {
-        avatarID,
-        avatarURL,
-        botType,
-        connectionStatus,
-        dominantSpeaker,
-        email,
-        isFakeParticipant,
-        isJigasi,
-        loadableAvatarUrl,
-        local,
-        name,
-        pinned,
-        presence,
-        role
-    } = participant;
-    let { conference, id } = participant;
+function _participantJoined({participant}) {
+  const {
+    avatarID,
+    avatarURL,
+    botType,
+    connectionStatus,
+    dominantSpeaker,
+    email,
+    isFakeParticipant,
+    isJigasi,
+    loadableAvatarUrl,
+    local,
+    name,
+    pinned,
+    presence,
+    role
+  } = participant;
+  let {conference, id} = participant;
 
-    if (local) {
-        // conference
-        //
-        // XXX The local participant is not identified in association with a
-        // JitsiConference because it is identified by the very fact that it is
-        // the local participant.
-        conference = undefined;
+  if (local) {
+    // conference
+    //
+    // XXX The local participant is not identified in association with a
+    // JitsiConference because it is identified by the very fact that it is
+    // the local participant.
+    conference = undefined;
 
-        // id
-        id || (id = LOCAL_PARTICIPANT_DEFAULT_ID);
-    }
+    // id
+    id || (id = LOCAL_PARTICIPANT_DEFAULT_ID);
+  }
 
-    return {
-        avatarID,
-        avatarURL,
-        botType,
-        conference,
-        connectionStatus,
-        dominantSpeaker: dominantSpeaker || false,
-        email,
-        id,
-        isFakeParticipant,
-        isJigasi,
-        loadableAvatarUrl,
-        local: local || false,
-        name,
-        pinned: pinned || false,
-        presence,
-        role: role || PARTICIPANT_ROLE.NONE
-    };
+  return {
+    avatarID,
+    avatarURL,
+    botType,
+    conference,
+    connectionStatus,
+    dominantSpeaker: dominantSpeaker || false,
+    email,
+    id,
+    isFakeParticipant,
+    isJigasi,
+    loadableAvatarUrl,
+    local: local || false,
+    name,
+    pinned: pinned || false,
+    presence,
+    role: role || PARTICIPANT_ROLE.NONE
+  };
 }
