@@ -25,6 +25,7 @@ import {getCurrentLayout, LAYOUTS} from '../../../react/features/video-layout';
 import UIUtils from '../util/UIUtil';
 
 import SmallVideo from './SmallVideo';
+import LanguageModeratorControl from './LanguageModeratorControl';
 
 const logger = Logger.getLogger(__filename);
 
@@ -121,6 +122,7 @@ export default class RemoteVideo extends SmallVideo {
         this.updateStatusBar();
         this.addAudioLevelIndicator();
         this.addPresenceLabel();
+        this.addVolumeControl();
 
         return this.container;
     }
@@ -480,6 +482,17 @@ export default class RemoteVideo extends SmallVideo {
         }
     }
 
+    addVolumeControl(){
+        ReactDOM.render(
+            <Provider store={APP.store}>
+                <I18nextProvider i18n={i18next}>
+                    <PresenceLabel
+                        participantID={this.id}
+                        className='presence-label'/>
+                </I18nextProvider>
+            </Provider>,
+            presenceLabelContainer);
+    }
     /**
      * Unmounts the {@code PresenceLabel} component.
      *
