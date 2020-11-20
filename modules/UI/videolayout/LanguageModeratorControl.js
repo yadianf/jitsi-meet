@@ -24,16 +24,18 @@ import {
     PARTICIPANT_ROLE
 } from "../../../react/features/base/participants";
 import {connect} from "../../../react/features/base/redux";
-import {
-    LANG_TYPE
-} from "../../../react/features/translator-moderator/LanguageContext";
+import {LANG_TYPE} from "../../../react/features/translator-moderator/LanguageContext";
 
-const LanguageVolumeControl = ({lang,langType, onVolumeChange}) => {
+const LanguageVolumeControl = ({isLang, lang, langType, onVolumeChange}) => {
 
     useEffect(() => {
-        const value = (lang === langType) ? 1 : 0;
-        alert('lang change for '+ lang + 'now yuo use ' + langType+ ', Volume '+ value);
-        onVolumeChange && onVolumeChange(value)
+        if (isLang) {
+            const value = (lang === langType) ? 1 : 0;
+            onVolumeChange && onVolumeChange(value)
+        } else {
+            const value = (LANG_TYPE.OPEN === langType) ? 1 : 0;
+            onVolumeChange && onVolumeChange(value)
+        }
     }, [langType, lang])
 
     return (
@@ -70,10 +72,10 @@ class LanguageModeratorControl extends Component {
             <div>
                 <p>{participant && participant.name}</p>
                 <p>{isModerator ? 'moderator' : 'no moderator'}</p>
-                {
-                    isLang && <LanguageVolumeControl lang={lang} langType={langType}
-                                                     onVolumeChange={onVolumeChange}/>
-                }
+                <LanguageVolumeControl lang={lang} langType={langType}
+                                       isLang={isLang}
+                                       onVolumeChange={onVolumeChange}/>
+
             </div>
         );
     }
@@ -101,7 +103,7 @@ function _mapStateToProps(state, ownProps) {
         participant,
         isModerator,
         isLang: isModerator && LANG_TYPE[name],
-        lang:LANG_TYPE[name],
+        lang: LANG_TYPE[name],
         langType: getLang(state) || LANG_TYPE.OPEN
     };
 }
