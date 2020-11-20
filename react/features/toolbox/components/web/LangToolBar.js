@@ -2,31 +2,23 @@ import React from 'react'
 import {En, Es, Fr, Room} from "../../../base/icons/svg";
 import ToolbarButton from "./ToolbarButton";
 import {useTranslation} from 'react-i18next';
-import {
-    LANG_TYPE,
-    useLanguage
-} from "../../../translator-moderator/LanguageContext";
-import {sendMessage, setPrivateMessageRecipient} from "../../../chat";
+import {LANG_TYPE} from "../../../translator-moderator/LanguageContext";
 import {connect} from "../../../base/redux";
-import {
-    changeLang,
-    getLocalParticipant,
-    getParticipantById, PARTICIPANT_ROLE
-} from "../../../base/participants";
+import {changeLang} from "../../../base/participants";
+
 const logger = Logger.getLogger(__filename);
 
-const LangToolBar = ({lang}) => {
+const LangToolBar = ({langType, useES, useEN, useFR, useOPEN}) => {
     const {t} = useTranslation('languages');
-    const {langType, useEN, useES, useFR, useOPEN} = useLanguage()
 
     return (
         <div>
-            <pre>{JSON.stringify(lang, null, 2)}</pre>
+            <pre>{JSON.stringify(langType, null, 2)}</pre>
             <ToolbarButton
                 accessibilityLabel=
                     {t('es')}
                 icon={Es}
-                onClick={useES}
+                onClick={(useES)}
                 toggled={langType === LANG_TYPE.ES}
                 tooltip={t('es')}/>
             <ToolbarButton
@@ -60,15 +52,27 @@ export function _mapDispatchToProps(dispatch: Function): $Shape<Props> {
         onChangeLang: (lang) => {
             dispatch(changeLang(lang));
         },
+        useES: () => {
+            dispatch(changeLang(LANG_TYPE.ES));
+        },
+        useEN: () => {
+            dispatch(changeLang(LANG_TYPE.EN));
+        },
+        useFR: () => {
+            dispatch(changeLang(LANG_TYPE.FR));
+        },
+        useOPEN: () => {
+            dispatch(changeLang(LANG_TYPE.OPEN));
+        },
     };
 }
 
-function _mapStateToProps(state){
+function _mapStateToProps(state) {
     // Only the local participant won't have id for the time when the conference is not yet joined.
     const {lang} = state;
     logger.info(`render lanTool`, state);
     return {
-      lang
+        langType: lang || LANG_TYPE.OPEN
     };
 }
 
