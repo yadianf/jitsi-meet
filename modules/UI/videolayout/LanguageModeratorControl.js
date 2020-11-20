@@ -29,10 +29,11 @@ import {
 } from "../../../react/features/translator-moderator/LanguageContext";
 
 const LanguageVolumeControl = ({lang,langType, onVolumeChange}) => {
+
     useEffect(() => {
         const value = (lang === langType) ? 1 : 0;
         alert('lang change for '+ lang + 'now yuo use ' + langType+ ', Volume '+ value);
-        onVolumeChange(value)
+        onVolumeChange && onVolumeChange(value)
     }, [langType, lang])
 
     return (
