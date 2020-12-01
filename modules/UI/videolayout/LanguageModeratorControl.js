@@ -1,20 +1,3 @@
-// import React, {useEffect} from 'react'
-// import {useLanguage} from "../../../react/features/contexts/LanguageContext";
-//
-
-//
-//
-// class LanguageModeratorControl {
-//
-//     render() {
-//         return (
-//             <span>test<LanguageVolumeControl/></span>
-//         )
-//     }
-// }
-//
-// export default LanguageModeratorControl;
-/* @flow */
 
 import React, {Component, useEffect} from 'react';
 import {

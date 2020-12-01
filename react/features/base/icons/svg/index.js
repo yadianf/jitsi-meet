@@ -107,4 +107,5 @@ export { default as IconYahoo } from './yahoo.svg';
 export { default as En } from './en.svg';
 export { default as Es } from './es.svg';
 export { default as Fr } from './fr.svg';
+export { default as Pt } from './pt.svg';
 export { default as Room } from './room.svg';

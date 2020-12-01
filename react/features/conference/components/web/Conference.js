@@ -30,7 +30,6 @@ import {
 
 import Labels from './Labels';
 import {default as Notice} from './Notice';
-import {LanguageProvider} from "../../../translator-moderator/LanguageContext";
 
 declare var APP: Object;
 declare var config: Object;
@@ -194,7 +193,6 @@ class Conference extends AbstractConference<Props, *> {
         const hideLabels = filmstripOnly || _iAmRecorder;
 
         return (
-            <LanguageProvider>
                 <div
                     className={_layoutClassName}
                     id='videoconference_page'
@@ -218,7 +216,6 @@ class Conference extends AbstractConference<Props, *> {
 
                     {!filmstripOnly && _showPrejoin && <Prejoin/>}
                 </div>
-            </LanguageProvider>
         );
     }
 
