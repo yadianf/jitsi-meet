@@ -1,4 +1,3 @@
-
 import React, {Component, useEffect} from 'react';
 import {
     getLang,
@@ -19,7 +18,7 @@ const LanguageVolumeControl = ({isLang, lang, langType, onVolumeChange}) => {
             const value = (LANG_TYPE.OPEN === langType) ? 1 : 0;
             onVolumeChange && onVolumeChange(value)
         }
-    }, [langType, lang])
+    }, [isLang, langType, lang, onVolumeChange])
 
     return (
         <div>
