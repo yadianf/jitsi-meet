@@ -7,12 +7,6 @@ import {Icon} from '../../../base/icons';
 import type {Props as AbstractToolbarButtonProps} from '../AbstractToolbarButton';
 import AbstractToolbarButton from '../AbstractToolbarButton';
 
-const CustomIcon = ({icon}) => {
-    if (typeof icon === 'string')
-        return <Icon src={icon}/>
-    return icon
-}
-
 /**
  * The type of the React {@code Component} props of {@link ToolbarButton}.
  */
@@ -115,10 +109,11 @@ class ToolbarButton extends AbstractToolbarButton<Props> {
      * @inheritdoc
      */
     _renderIcon() {
+
         return (
             <div
                 className={`toolbox-icon ${this.props.toggled ? 'toggled' : ''}`}>
-                <CustomIcon icon={this.props.icon}/>
+                <Icon src={this.props.icon}/>
             </div>
         );
     }

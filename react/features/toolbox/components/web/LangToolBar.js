@@ -7,13 +7,17 @@ import {changeLang, getLang} from "../../../base/participants";
 import Logger from 'jitsi-meet-logger';
 import OverflowMenuButton from "./OverflowMenuButton";
 import map from "lodash/map";
-import {Room} from "../../../base/icons/svg";
-import LanIcon from "./LanIcon";
+import {En, Es, Fr, Pt, Room} from "../../../base/icons/svg";
 
 const logger = Logger.getLogger(__filename);
 
 const ICON = {
     [LANG_TYPE.OPEN]: Room,
+    [LANG_TYPE.FR]: Fr,
+    [LANG_TYPE.EN]: En,
+    [LANG_TYPE.ES]: Es,
+    [LANG_TYPE.ES]: Es,
+    [LANG_TYPE.PT]: Pt,
 }
 const customName = {
     OPEN: 'Abierto',
@@ -29,12 +33,10 @@ const LangToolBar = ({langType, onChangeLang, isSmallWidth}) => {
 
         t(lan.toLocaleString());
 
-        const icon = ICON[lan] || <LanIcon lan={lan}/>
-
         return <ToolbarButton
             key={lan}
             accessibilityLabel={t(lan.toLocaleString())}
-            icon={icon}
+            icon={ICON[lan]}
             onClick={() => onChangeLang(LANG_TYPE[lan])}
             toggled={langType === LANG_TYPE[lan]}
             tooltip={t(name)}/>
