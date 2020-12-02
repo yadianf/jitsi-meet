@@ -7,10 +7,10 @@ import {Icon} from '../../../base/icons';
 import type {Props as AbstractToolbarButtonProps} from '../AbstractToolbarButton';
 import AbstractToolbarButton from '../AbstractToolbarButton';
 
-const CustomIcon = ({Src}) => {
-    if (typeof Src === 'string')
-        return <Icon src={Src}/>
-    return <Src/>
+const CustomIcon = ({icon}) => {
+    if (typeof icon === 'string')
+        return <Icon src={icon}/>
+    return icon
 }
 
 /**
@@ -118,7 +118,7 @@ class ToolbarButton extends AbstractToolbarButton<Props> {
         return (
             <div
                 className={`toolbox-icon ${this.props.toggled ? 'toggled' : ''}`}>
-                <CustomIcon Src={this.props.icon}/>
+                <CustomIcon icon={this.props.icon}/>
             </div>
         );
     }
