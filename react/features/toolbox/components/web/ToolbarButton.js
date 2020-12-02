@@ -3,10 +3,9 @@
 import Tooltip from '@atlaskit/tooltip';
 import React from 'react';
 
-import { Icon } from '../../../base/icons';
+import {Icon} from '../../../base/icons';
+import type {Props as AbstractToolbarButtonProps} from '../AbstractToolbarButton';
 import AbstractToolbarButton from '../AbstractToolbarButton';
-import type { Props as AbstractToolbarButtonProps }
-    from '../AbstractToolbarButton';
 
 /**
  * The type of the React {@code Component} props of {@link ToolbarButton}.
@@ -86,20 +85,20 @@ class ToolbarButton extends AbstractToolbarButton<Props> {
     _renderButton(children) {
         return (
             <div
-                aria-label = { this.props.accessibilityLabel }
-                aria-pressed = { this.props.toggled }
-                className = 'toolbox-button'
-                onClick = { this.props.onClick }
-                onKeyDown = { this._onKeyDown }
-                role = 'button'
-                tabIndex = { 0 }>
-                { this.props.tooltip
+                aria-label={this.props.accessibilityLabel}
+                aria-pressed={this.props.toggled}
+                className='toolbox-button'
+                onClick={this.props.onClick}
+                onKeyDown={this._onKeyDown}
+                role='button'
+                tabIndex={0}>
+                {this.props.tooltip
                     ? <Tooltip
-                        content = { this.props.tooltip }
-                        position = { this.props.tooltipPosition }>
-                        { children }
+                        content={this.props.tooltip}
+                        position={this.props.tooltipPosition}>
+                        {children}
                     </Tooltip>
-                    : children }
+                    : children}
             </div>
         );
     }
@@ -110,9 +109,14 @@ class ToolbarButton extends AbstractToolbarButton<Props> {
      * @inheritdoc
      */
     _renderIcon() {
+        let IconP = this.props.icon;
+        if (typeof this.props.icon === 'string') {
+            IconP = <Icon src={this.props.icon}/>;
+        }
         return (
-            <div className = { `toolbox-icon ${this.props.toggled ? 'toggled' : ''}` }>
-                <Icon src = { this.props.icon } />
+            <div
+                className={`toolbox-icon ${this.props.toggled ? 'toggled' : ''}`}>
+                <IconP/>
             </div>
         );
     }
