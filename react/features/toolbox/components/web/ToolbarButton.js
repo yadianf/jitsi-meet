@@ -8,8 +8,8 @@ import type {Props as AbstractToolbarButtonProps} from '../AbstractToolbarButton
 import AbstractToolbarButton from '../AbstractToolbarButton';
 
 const CustomIcon = ({Src}) => {
-    if (typeof this.props.icon === 'string')
-        return <Icon src={this.props.icon}/>
+    if (typeof Src === 'string')
+        return <Icon src={Src}/>
     return <Src/>
 }
 
